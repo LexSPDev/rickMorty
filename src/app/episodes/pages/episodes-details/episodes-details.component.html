@@ -1,0 +1,9 @@
+<div *ngIf="episode$ | async as episode">
+    <h2>{{episode.name}}</h2>
+</div>
+<div *ngFor="let resident of arregloResident">
+    {{ resident }}
+</div>
+<button (click)="goBack()">
+    Back
+</button>

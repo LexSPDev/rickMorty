@@ -1,0 +1,11 @@
+<div *ngIf="character$ | async as character">
+    <img 
+        [src]="character.image" 
+        [alt]="character.name">
+    <h2>{{character.name}}</h2>
+    <h4>{{character.gender}}</h4>
+    <small>{{character.created | date}}</small>
+</div>
+<button (click)="goBack()">
+    Back
+</button>

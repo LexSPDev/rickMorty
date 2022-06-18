@@ -1,0 +1,5 @@
+<ul >
+    <li *ngFor="let episodes of episodes" >
+        <a [routerLink]="['details', episodes.id]">{{episodes.name}}</a>
+    </li>
+</ul>

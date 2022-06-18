@@ -1,0 +1,5 @@
+<ul >
+    <li *ngFor="let locations of locations" >
+        <a [routerLink]="['details', locations.id]">{{locations.name}}</a>
+    </li>
+</ul>

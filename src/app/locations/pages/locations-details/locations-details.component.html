@@ -1,0 +1,9 @@
+<div *ngIf="location$ | async as location">
+    <h2>{{location.name}}</h2>
+</div >
+<div *ngFor="let resident of arregloResident">
+        {{ resident }}
+</div>
+<button (click)="goBack()">
+    Back
+</button>
