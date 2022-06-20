@@ -1,8 +1,11 @@
 <div *ngIf="location$ | async as location">
-    <h2>{{location.name}}</h2>
-</div >
-<div *ngFor="let resident of arregloResident">
-        {{ resident }}
+    <h2>Resident in {{location.name}}</h2>
+</div>
+<div class="wrapper">
+    <div  *ngFor="let resident of arregloResident">
+        <img [src]="resident.image" [alt]="resident.name">
+        <span> {{ resident.name }}</span> 
+    </div>
 </div>
 <button (click)="goBack()">
     Back

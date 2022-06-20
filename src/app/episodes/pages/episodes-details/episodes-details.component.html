@@ -1,7 +1,9 @@
-<h2 *ngIf="episode$ | async as episode">{{episode.name}}</h2>
-<div *ngFor="let resident of arregloResident">
-    <img [src]="resident.image" [alt]="resident.name">
-    {{ resident.name }}
+<h2 *ngIf="episode$ | async as episode">Appearance in {{episode.name}}</h2>
+<div class="wrapper">
+    <div *ngFor="let resident of arregloResident">
+        <img [src]="resident.image" [alt]="resident.name">
+        <span> {{ resident.name }}</span> 
+    </div>
 </div>
 <button (click)="goBack()">
     Back

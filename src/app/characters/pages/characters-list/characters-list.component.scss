@@ -9,11 +9,7 @@ li a img{
    width: 100px;
    border-radius: 50px; 
 }
-.wrapper{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    padding: 0;
-}
+
 a{
     display: flex;
     flex-direction: column;

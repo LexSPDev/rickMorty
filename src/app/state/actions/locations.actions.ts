@@ -9,5 +9,5 @@ export const loadLocations = createAction(
 
 export const loadedLocations = createAction(
     '[location list] Loaded success', 
-    props<{ location: LocationInt[] }>()
+    props<{ location: LocationInt[], info: any[] }>()
 )

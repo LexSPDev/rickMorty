@@ -15,7 +15,22 @@ button{
     font-size: 20px;
     color: white;
 }
-
+.wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 0;
+    & img{
+     width: 100%;
+     border-radius: 100px   
+    }
+    & div{
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
 .wrapperButtonPanel{
     display: flex;
     justify-content: center;

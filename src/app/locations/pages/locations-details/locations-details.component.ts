@@ -12,7 +12,7 @@ import { LocationsService } from 'src/app/services/locations.service';
 export class LocationsDetailsComponent implements OnInit {
   location$: Observable<LocationInt> = new Observable<LocationInt>();
   residents: any;
-  arregloResident: Array<string> = [];
+  arregloResident: Array<any> = [];
   constructor(private route:ActivatedRoute, 
     private locationService:LocationsService, 
     private location:Location ) { }
@@ -26,8 +26,7 @@ export class LocationsDetailsComponent implements OnInit {
         console.log(this.residents)
         for(let item of this.residents){
           this.locationService.getResident(item).pipe(take(1)).subscribe((res)=>{
-            console.log(res.name)
-            this.arregloResident.push(res.name)
+            this.arregloResident.push(res)
           })
         }
       })

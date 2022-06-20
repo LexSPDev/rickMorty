@@ -23,8 +23,6 @@ export class CharactersListComponent implements OnInit {
     }
   private pageNum = 1;
   private query = '';
-  private hideScrollHeight= 200;
-  private sowScrollHeight = 500;
 
   constructor( private charactersService: CharactersSevice,
     private route:ActivatedRoute,

@@ -1,5 +1,7 @@
+<h2>Locations</h2>
 <ul class="wrapperList">
-    <li *ngFor="let locations of locations" >
+    <span *ngIf="(loading$ | async)">Loading...</span>
+    <li *ngFor="let locations of location$ | async" >
             <a [routerLink]="['details', locations.id]">
                 <span class="itemList">
                     {{locations.name}}
@@ -7,3 +9,7 @@
             </a>
     </li>
 </ul>
+<div class="wrapperButtonPanel">
+    <button (click)="changePage('previous')">Previuos</button>
+    <button (click)="changePage('next')">Next</button>
+</div>

@@ -5,13 +5,19 @@ import { LocationInt, RequestInfo } from 'src/app/models/locations.interface';
 import { LocationsService } from 'src/app/services/locations.service';
 import { Store } from '@ngrx/store'
 import { loadNav } from 'src/app/state/actions/nav.actions';
+import { loadedLocations, loadLocations } from 'src/app/state/actions/locations.actions';
+import { Observable } from 'rxjs';
+import { selectLoadingEpisodes } from 'src/app/state/selectors/episode.selector';
+import { selectListInfoLocations, selectListLocation, selectLoadingLocations } from 'src/app/state/selectors/location.selector';
 @Component({
   selector: 'app-locations-list',
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent implements OnInit {
-  locations: LocationInt[] = [];
+  loading$ : Observable<boolean> = new Observable();
+  location$: Observable<LocationInt[]> = new Observable();
+  info$: Observable<any> = new Observable();
   info: RequestInfo = {
       next: '',
     }
@@ -23,18 +29,20 @@ export class LocationsListComponent implements OnInit {
     private route:ActivatedRoute,
     private router: Router,
     private store:Store<any>) { 
+      this.store.dispatch(loadLocations())
       this.onUrlChanged();
     }
 
   ngOnInit(): void {
     this.getCharacterSearch();
+    this.loading$ = this.store.select(selectLoadingLocations)
+    this.location$ = this.store.select(selectListLocation)
     this.store.dispatch(loadNav({ nav: 'locations' }))
   }
   private onUrlChanged(){
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.locations = [];
         this.pageNum = 1;        
         this.getCharacterSearch();
       })
@@ -54,14 +62,30 @@ export class LocationsListComponent implements OnInit {
       .pipe( take (1))
       .subscribe ( ( res: any ) => {
         if(res?.results?.length){
-          this.locations = [];
           const { info, results } = res;
-          this.locations = [...this.locations, ...results]
           this.info = info
-        } else {
-          this.locations = []
+          this.store.dispatch(loadedLocations({
+            location : results,
+            info: info,
+          }))
         }
-      } )
+      })
   }
+  changePage(value:string){
+    let rutaNext: string;
+    let rutaPrev: string;
+    this.info$ = this.store.select(selectListInfoLocations)
+    this.info$.pipe(take(1)).subscribe((res)=>{    
+      rutaNext = res.next;
+      rutaPrev = res.prev;
+      if(rutaNext !== null && value === 'next' ){
+        this.pageNum++;
+        this.getDataFromService();
+        } else if(rutaPrev !== null && value === 'previous'){
+          this.pageNum--;
+          this.getDataFromService();
+      }
+    });
+}
 
 }

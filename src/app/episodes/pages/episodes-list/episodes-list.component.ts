@@ -5,26 +5,34 @@ import { Episode, RequestInfo } from 'src/app/models/episodes.interface';
 import { EpisodesService } from 'src/app/services/episodes.service';
 import { Store } from '@ngrx/store'
 import { loadNav } from 'src/app/state/actions/nav.actions';
+import { Observable } from 'rxjs';
+import { loadedEpisodes, loadEpisodes } from 'src/app/state/actions/episodes.actions';
+import { selectListEpisodes, selectListInfoEpisodes, selectLoadingEpisodes } from 'src/app/state/selectors/episode.selector';
 @Component({
   selector: 'app-episodes-list',
   templateUrl: './episodes-list.component.html',
   styleUrls: ['./episodes-list.component.scss']
 })
 export class EpisodesListComponent implements OnInit {
-  episodes: Episode[] = [];
+  loading$ : Observable<boolean> = new Observable();
+  episode$: Observable<Episode[]> = new Observable();
+  info$: Observable<any> = new Observable();
   info: RequestInfo = {
       next: '',
     }
   private pageNum = 1;
   private query = '';
-  private hideScrollHeight= 200;
-  private sowScrollHeight = 500;
   constructor(private episodeService: EpisodesService,
     private route:ActivatedRoute,
     private router: Router,
-    private store:Store<any>) { this.onUrlChanged()}
+    private store:Store<any>) { 
+      this.store.dispatch(loadEpisodes())
+      this.onUrlChanged()
+    }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoadingEpisodes)
+    this.episode$ = this.store.select(selectListEpisodes)
     this.getDataFromService();
     this.store.dispatch(loadNav({ nav: 'episodes' }))
   }
@@ -33,7 +41,6 @@ export class EpisodesListComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.episodes = [];
         this.pageNum = 1;        
         this.getCharacterSearch();
       })
@@ -52,14 +59,30 @@ export class EpisodesListComponent implements OnInit {
       .pipe( take (1))
       .subscribe ( ( res: any ) => {
         if(res?.results?.length){
-          this.episodes = [];
           const { info, results } = res;
-          this.episodes = [...this.episodes, ...results]
           this.info = info
-        } else {
-          this.episodes = []
-        }
+          this.store.dispatch(loadedEpisodes({
+            info: info,
+            episode : results
+          }))
+        } 
       });
   }
+  changePage(value:string){
+    let rutaNext: string;
+    let rutaPrev: string;
+    this.info$ = this.store.select(selectListInfoEpisodes)
+    this.info$.pipe(take(1)).subscribe((res)=>{    
+      rutaNext = res.next;
+      rutaPrev = res.prev;
+      if(rutaNext !== null && value === 'next' ){
+        this.pageNum++;
+        this.getDataFromService();
+        } else if(rutaPrev !== null && value === 'previous'){
+          this.pageNum--;
+          this.getDataFromService();
+      }
+    });
 
+  }
 }

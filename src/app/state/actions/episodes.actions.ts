@@ -7,5 +7,5 @@ export const loadEpisodes = createAction(
 
 export const loadedEpisodes = createAction(
     '[episode list] Loaded success', 
-    props<{ episode: Episode[] }>()
+    props<{ episode: Episode[], info: any}>()
 )

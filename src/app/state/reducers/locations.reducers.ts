@@ -3,7 +3,7 @@ import { locationState } from 'src/app/models/locations.state';
 import { loadedLocations, loadLocations } from '../actions/locations.actions';
 
 
-export const initialState:locationState = { loading: false, location:[]}
+export const initialState:locationState = { loading: false, location:[], info:[]}
 
 export const locationReducer = createReducer(
     initialState,
