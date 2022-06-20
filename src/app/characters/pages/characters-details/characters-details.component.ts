@@ -23,7 +23,6 @@ export class CharactersDetailsComponent implements OnInit {
         const id = params['id'];
         this.character$ = this.characterService.getDetails(id)
     });
-    console.log(this.character$)
   }
 
   goBack(){

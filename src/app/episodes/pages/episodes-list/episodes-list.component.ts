@@ -3,6 +3,8 @@ import { take, filter }from 'rxjs/operators'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Episode, RequestInfo } from 'src/app/models/episodes.interface';
 import { EpisodesService } from 'src/app/services/episodes.service';
+import { Store } from '@ngrx/store'
+import { loadNav } from 'src/app/state/actions/nav.actions';
 @Component({
   selector: 'app-episodes-list',
   templateUrl: './episodes-list.component.html',
@@ -19,10 +21,12 @@ export class EpisodesListComponent implements OnInit {
   private sowScrollHeight = 500;
   constructor(private episodeService: EpisodesService,
     private route:ActivatedRoute,
-    private router: Router) { this.onUrlChanged()}
+    private router: Router,
+    private store:Store<any>) { this.onUrlChanged()}
 
   ngOnInit(): void {
     this.getDataFromService();
+    this.store.dispatch(loadNav({ nav: 'episodes' }))
   }
 
   private onUrlChanged(){

@@ -1,1 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    box-sizing: border-box;
+    margin: 0px;
+    background-color: antiquewhite;
+}
+
+button{
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    background-color:green;
+    border-style: none;
+    border-radius: 20px;
+    font-size: 20px;
+    color: white;
+}
+
+.wrapperButtonPanel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapperCharacter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.wrapperList{
+    margin: 10px;
+    & li {
+        list-style: none;
+        margin: 10px;
+    }
+   & .itemList {
+        display:flex;
+        align-items: center;
+        text-decoration: none;
+        background-color: azure;
+        height: 40px;
+        border-radius: 20px;
+        padding: 10px;
+    }
+    & a {
+        color: black;
+        text-decoration: none;
+        
+    }   
+}
+
+.wrapperNav{
+    background-color: black;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.wrapperLink{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    & a{
+        margin: 10px;
+        text-decoration: none;
+        color: antiquewhite;
+        font-size: 20px;
+    }
+}
+h1{
+    color: antiquewhite;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

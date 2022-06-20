@@ -1,8 +1,7 @@
-<div *ngIf="episode$ | async as episode">
-    <h2>{{episode.name}}</h2>
-</div>
+<h2 *ngIf="episode$ | async as episode">{{episode.name}}</h2>
 <div *ngFor="let resident of arregloResident">
-    {{ resident }}
+    <img [src]="resident.image" [alt]="resident.name">
+    {{ resident.name }}
 </div>
 <button (click)="goBack()">
     Back

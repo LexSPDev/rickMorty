@@ -1,5 +1,13 @@
-<ul >
-    <li *ngFor="let character of characters" >
-        <a [routerLink]="['details', character.id]">{{character.name}}</a>
+<span *ngIf="(loading$ | async)">Loading...</span>
+<ul class="wrapper">
+    <li *ngFor="let character of characters$ | async" >
+        <a [routerLink]="['details', character.id]">
+            <img [src]="character.image" alt="character.name">
+            <span> {{character.name}} </span>
+        </a>
     </li>
 </ul>
+<div class="wrapperButtonPanel">
+    <button (click)="changePage('previous')">Previuos</button>
+    <button (click)="changePage('next')">Next</button>
+</div>

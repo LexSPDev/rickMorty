@@ -3,6 +3,8 @@ import { take, filter }from 'rxjs/operators'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocationInt, RequestInfo } from 'src/app/models/locations.interface';
 import { LocationsService } from 'src/app/services/locations.service';
+import { Store } from '@ngrx/store'
+import { loadNav } from 'src/app/state/actions/nav.actions';
 @Component({
   selector: 'app-locations-list',
   templateUrl: './locations-list.component.html',
@@ -19,12 +21,14 @@ export class LocationsListComponent implements OnInit {
   private sowScrollHeight = 500;
   constructor( private locationService: LocationsService,
     private route:ActivatedRoute,
-    private router: Router) { 
+    private router: Router,
+    private store:Store<any>) { 
       this.onUrlChanged();
     }
 
   ngOnInit(): void {
     this.getCharacterSearch();
+    this.store.dispatch(loadNav({ nav: 'locations' }))
   }
   private onUrlChanged(){
     this.router.events

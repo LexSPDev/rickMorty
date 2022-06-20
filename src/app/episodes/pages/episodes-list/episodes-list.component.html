@@ -1,5 +1,9 @@
-<ul >
+<ul class="wrapperList">
     <li *ngFor="let episodes of episodes" >
-        <a [routerLink]="['details', episodes.id]">{{episodes.name}}</a>
+        <a [routerLink]="['details', episodes.id]">
+                <div class="itemList">
+                {{episodes.name}}
+            </div>
+        </a>
     </li>
 </ul>

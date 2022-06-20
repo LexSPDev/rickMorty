@@ -13,7 +13,7 @@ import { EpisodesService } from 'src/app/services/episodes.service';
 export class EpisodesDetailsComponent implements OnInit {
   episode$: Observable<Episode> = new Observable<Episode>();
   residents: any;
-  arregloResident: Array<string> = [];
+  arregloResident: Array<any> = [];
   constructor( private route:ActivatedRoute, 
     private episodeService:EpisodesService,
     private location:Location ) { }
@@ -24,16 +24,13 @@ export class EpisodesDetailsComponent implements OnInit {
       this.episode$ = this.episodeService.getDetails(id)
       this.episode$.pipe(pluck('characters')).subscribe((res) =>{
         this.residents = res;
-        console.log(this.residents)
         for(let item of this.residents){
           this.episodeService.getResident(item).pipe(take(1)).subscribe((res)=>{
-            console.log(res.name)
-            this.arregloResident.push(res.name)
+            this.arregloResident.push(res)
           })
         }
       })
   });
-  console.log(this.episode$)
   }
   goBack(){
     this.location.back(); 

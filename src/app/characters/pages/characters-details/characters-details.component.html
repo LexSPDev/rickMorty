@@ -1,11 +1,16 @@
-<div *ngIf="character$ | async as character">
+<div class="wrapperCharacter" *ngIf="character$ | async as character">
     <img 
-        [src]="character.image" 
-        [alt]="character.name">
-    <h2>{{character.name}}</h2>
-    <h4>{{character.gender}}</h4>
-    <small>{{character.created | date}}</small>
+    [src]="character.image" 
+    [alt]="character.name">
+    <h2>Name : {{character.name}}</h2>
+    <h4>Gender: {{character.gender}}</h4>
+    <h4>Status: {{character.status}}</h4>
+    <small> Created: {{character.created | date}}</small>
+    
+    
 </div>
-<button (click)="goBack()">
-    Back
-</button>
+<div class="wrapperButtonPanel">
+    <button (click)="goBack()" style="background-color:red">
+        Back
+    </button>
+</div>
